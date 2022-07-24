@@ -24,6 +24,10 @@ const rect = (ctx, xPos, yPos, height, width) => {
   ctx.strokeRect(xPos, yPos, height, width);
 };
 
+const fillRect = (ctx, xPos, yPos, height, width) => {
+  ctx.fillRect(xPos, yPos, height, width);
+};
+
 const point = (ctx, xPos, yPos) => {
   ctx.fillRect(xPos, yPos, 1, 1);
 };
@@ -34,7 +38,12 @@ const ellipse = (ctx, x, y, r, sAngle = 0, eAngle = 2 * Math.PI) => {
   ctx.fill();
 };
 
-const DIM = 4;
+const doSomeCoolStuff = (xPos, yPos) => {
+  setFillStyle(ctx, 120, 200, 200);
+  fillRect(ctx, xPos, yPos, height / DIM, width / DIM);
+};
+
+const DIM = 10;
 const rows = [];
 
 let r = 100;
@@ -55,12 +64,11 @@ for (let j = 0; j < DIM; j++) {
   for (let i = 0; i < DIM; i++) {
     let xPos = i * (width / DIM);
     row.push(xPos);
-    rect(ctx, xPos, yPos, height / DIM, width / DIM);
+    // rect(ctx, xPos, yPos, height / DIM, width / DIM);
   }
   rows.push(row);
 }
 
-console.log(rows);
 function draw(e) {
   let x = getMousePos(canvas, e)["x"];
   let y = getMousePos(canvas, e)["y"];
@@ -69,7 +77,11 @@ function draw(e) {
   let columnIndex = Math.floor(x / step);
   let rowIndex = Math.floor(y / step);
 
-  console.log(
-    `row: ${(height / DIM) * rowIndex}, column: ${(width / DIM) * columnIndex}`
-  );
+  const normalizedYPos = (height / DIM) * rowIndex;
+  const normalizedXPos = (width / DIM) * columnIndex;
+
+  doSomeCoolStuff(normalizedXPos, normalizedYPos);
+  // console.log(
+  //   `row: ${(height / DIM) * rowIndex}, column: ${(width / DIM) * columnIndex}`
+  // );
 }
